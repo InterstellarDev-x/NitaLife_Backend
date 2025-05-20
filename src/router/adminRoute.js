@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const jwt_secret = "Nita-is-best"
 const { z } = require("zod");
 const adminroute = Router();
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const  { adminMiddleware }  = require("../middleware/adminMiddleware");
 
 

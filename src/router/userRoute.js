@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { z } = require("zod");
 const userRoute = Router();
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { UserModel } = require("../../db");
 const jwt = require("jsonwebtoken");
 const jwt_secret = "Nita-is-best";
