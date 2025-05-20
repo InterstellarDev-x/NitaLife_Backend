@@ -1,4 +1,4 @@
-const { Router } = require("express");
+const { Router, response } = require("express");
 const mongoose = require("mongoose");
 const { StoreModel, AdminModel } = require("../../db");
 const jwt = require("jsonwebtoken");
@@ -106,7 +106,7 @@ adminroute.use(adminMiddleware)
 adminroute.post("/create/store", async (req, res) => {
   
 
-  const AdminId = req.AdminId
+  const AdminId = req.AdminId // Not in use
 
   const { name, address, phoneno, Descrption, imageUrl } = req?.body;
   console.log(req?.body)
@@ -127,3 +127,77 @@ adminroute.post("/create/store", async (req, res) => {
 module.exports = {
   adminroute: adminroute,
 };
+
+
+adminroute.delete("/store/:id" , async(req,res)=>{
+
+  const _id = req.params.id
+
+
+  try {
+  const reponse = await StoreModel.deleteOne({
+    _id : _id
+  })
+
+
+
+  res.status(200).json({
+    msg : "Card Deleted Succesfully"
+  })
+
+
+  }catch(e){
+    console.log(e )
+    res.status(500).json({
+      msg : "Internal Server Error"
+    })
+  }
+
+  
+
+})
+
+
+adminroute.put("/store/:id" , async(req,res)=>{
+
+const  id = req.params.id 
+
+
+  
+  const { name, address, phoneno, Descrption, imageUrl } = req?.body; 
+
+  try {
+   const reponse =  await StoreModel.findOneAndUpdate({
+      _id : id
+    },
+     {
+
+     $set:  { 
+      name : name,
+      address : address ,
+      phoneno : phoneno,
+      Descrption : Descrption,
+      imageUrl : imageUrl}
+    })
+
+    console.log(reponse)
+
+  
+     if(response){
+      res.status(200).json({
+        msg : "Store Updated Succesfully"
+      })
+     }else {
+      res.status(403).json({
+        msg : "Can't Updated Now"
+      })
+     }
+
+  }catch(e){
+
+    console.log(e)
+    res.status(500).json({
+      msg : "Internal Server Error"
+    })
+  }
+})
