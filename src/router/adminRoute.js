@@ -76,7 +76,7 @@ adminroute.post("/signin", async (req, res) => {
   });
 
   if (!Admin) {
-    return res.json({
+    return res.status(404).json({
       msg: "Admin not found",
     });
   }
